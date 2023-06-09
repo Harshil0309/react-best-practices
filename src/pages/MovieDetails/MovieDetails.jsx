@@ -1,28 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
-import axios from "axios";
-import Loading from "../../components/Loading/Loading";
 import Error from "../../components/Error/Error";
-
-import MovieItem from "../../components/MovieItem/MovieItem";
-
-function Search() {
+import Loading from "../../components/Loading/Loading";
+import axios from "axios";
+function MovieDetails() {
   const { search } = useLocation();
-
   const searchParams = new URLSearchParams(search);
-  const movieName = searchParams.get("search_query");
+  const movieId = searchParams.get("movie_id");
 
-  const [movieList, setMovieList] = useState([]);
+  const [movieData, setMovieData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
     setIsError(null);
-    async function fetch() {
+    const fetch = async () => {
       try {
         const data = await axios(
-          `https://api.themoviedb.org/3/search/movie?query=${movieName}`,
+          `https://api.themoviedb.org/3/movie/${movieId}`,
           {
             method: "GET",
             headers: {
@@ -32,37 +28,26 @@ function Search() {
             },
           }
         );
-        if (data.data.results.length == 0) {
-          throw { message: "No Movies Found" };
-        }
-        setMovieList(data.data.results);
+        setMovieData(data.data);
       } catch (error) {
         setIsError(error.message);
       } finally {
         setIsLoading(false);
       }
-    }
-    fetch();
-  }, [movieName]);
+    };
 
-  if (isLoading) {
-    return <Loading />;
-  }
+    fetch();
+  }, [movieId]);
 
   if (isError) {
     return <Error message={isError} />;
   }
 
-  return (
-    <div>
-      <h3>Search Result For : {movieName}</h3>
-      <div>
-        {movieList.map((item) => {
-          return <MovieItem movieDetails={item} />;
-        })}
-      </div>
-    </div>
-  );
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  return <div>{movieId}</div>;
 }
 
-export default Search;
+export default MovieDetails;
