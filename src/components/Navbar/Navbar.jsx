@@ -11,11 +11,6 @@ function Navbar() {
 
   const [searchTerm, setSearchTerm] = useState(() => {
     if (pathname != "/search") return "";
-    // const queryArr = search.slice(1).split("&")[0].split("=");
-    // if (queryArr[0] == "search_query") {
-    //   return removePlusAddSpaces(queryArr[1]);
-    // }
-    // return "";
     const searchParams = new URLSearchParams(search);
     const query = searchParams.get("search_query");
     return query;
@@ -39,6 +34,8 @@ function Navbar() {
           onChange={(e) => setSearchTerm(e.target.value)}
           onKeyDown={(e) => handleOnEnter(e)}
         />
+        <Link to="/favourite">My Favourites</Link>
+        <Link to="/watchlist">Watch Later</Link>
       </div>
     </div>
   );
