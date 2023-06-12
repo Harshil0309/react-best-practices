@@ -1,11 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar/Navbar";
-import Home from "./pages/Home/Home";
-import Search from "./pages/Search/Search";
-import MovieDetails from "./pages/MovieDetails/MovieDetails";
-import Private from "./components/Private/Private";
-import WatchLater from "./pages/WatchLater/WatchLater";
-import Favourite from "./pages/Favourites/Favourite";
+import { lazy, Suspense } from "react";
+
+const Navbar = lazy(() => import("./components/Navbar/Navbar"));
+const Home = lazy(() => import("./pages/Home/Home"));
+const Search = lazy(() => import("./pages/Search/Search"));
+const MovieDetails = lazy(() => import("./pages/MovieDetails/MovieDetails"));
+const Private = lazy(() => import("./components/Private/Private"));
+const WatchLater = lazy(() => import("./pages/WatchLater/WatchLater"));
+const Favourite = lazy(() => import("./pages/Favourites/Favourite"));
+
 function App() {
   return (
     <BrowserRouter>

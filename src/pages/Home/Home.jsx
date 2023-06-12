@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { lazy } from "react";
 import axios from "axios";
 import "./Home.css";
 
-import Loading from "../../components/Loading/Loading";
-import MovieItem from "../../components/MovieItem/MovieItem";
-import Error from "../../components/Error/Error";
+const Loading = lazy(() => import("../../components/Loading/Loading"));
+const MovieItem = lazy(() => import("../../components/MovieItem/MovieItem"));
+const Error = lazy(() => import("../../components/Error/Error"));
 
 function Home() {
   const [movieList, setMovieList] = useState([]);
